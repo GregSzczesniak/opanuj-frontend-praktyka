@@ -16,4 +16,23 @@ describe('Form validation', () => {
         const errors = formValidator('John', 'Doe', -1);
         expect(errors).toContain('Age must be a positive number');
     });
+
+    test('should return no errors if all fields are valid', () => {
+        const errors = formValidator('John', 'Doe', 30);
+        expect(errors).toEqual([]);
+    });
+
+    test('should return no errors if first name is at least 1 characters long', () => {
+        const errors = formValidator('J', 'Doe', 30);
+        expect(errors).toEqual([]);
+    });
+
+    test('should return no errors if last name is is at least 1 characters long', () => {
+        const errors = formValidator('John', 'D', 30);
+        expect(errors).toEqual([]);
+    });
+
+    test('should throw an error if age is not a number', () => {
+        expect(() => formValidator('John', 'Doe', NaN)).toThrowError('Age must be a number');
+    });
 });
